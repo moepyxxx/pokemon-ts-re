@@ -1,7 +1,7 @@
 # API定義
 
 ## ポケモンの一覧取得
-- pokemon/
+- bookpokemon/
   - GET : 一覧の取得
     - request: {
       offset: number
