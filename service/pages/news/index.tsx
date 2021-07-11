@@ -1,8 +1,10 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { useState } from 'react'
+
 import Header from '../../components/common/Header';
 import NewsContents from '../../components/news/Contents';
 import PageTitle from '../../components/common/PageTitle';
+import Footer from '../../components/common/Footer';
 
 export default function News({ news, isNext }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 
@@ -15,6 +17,7 @@ export default function News({ news, isNext }: InferGetServerSidePropsType<typeo
       <Header />
       <PageTitle title='更新情報' menu='news' />
       <NewsContents news={news} pager={pager} prev={prev} next={next} />
+      <Footer />
     </>
   )  
 }

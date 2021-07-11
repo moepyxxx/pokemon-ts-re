@@ -6,6 +6,7 @@ import { SummaryBookPokemon } from '../types/pokemon/SummaryBookPokemon'
 import Header from '../components/common/Header';
 import PageTitle from '../components/common/PageTitle';
 import BookPokemonContents from '../components/bookpokemon/Contents';
+import Footer from '../components/common/Footer';
 
 export default function Home({ initialPokemons, isNext }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 
@@ -25,6 +26,7 @@ export default function Home({ initialPokemons, isNext }: InferGetServerSideProp
       <Header />
       <PageTitle title='ポケモン図鑑そうごう' menu='book' />
       <BookPokemonContents next={next} pokemons={pokemons} pager={pager} viewMore={more}  />
+      <Footer />
     </>
   )  
 }
