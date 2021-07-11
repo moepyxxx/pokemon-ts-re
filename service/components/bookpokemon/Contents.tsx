@@ -20,7 +20,7 @@ const Contents: React.FC<Props> = ({ pokemons, pager, next, viewMore }) => {
       </List>
 
       <Pager>
-        { next ? <button onClick={viewMore}>もっと見る</button> : ''}
+        { next ? <Button onClick={viewMore}>もっと見る</Button> : ''}
       </Pager>
 
     </Section>
@@ -43,6 +43,27 @@ export const List = styled.div`
 
 export const Pager = styled.div`
   text-align: center;
+`;
+export const Button = styled.button`
+  color: #fff;
+  background-color: #E6001A;
+  width: 300px;
+  padding: 12px 12px 14px;
+  border: none;
+  font-size: 18px;
+  position: relative;
+  cursor: pointer;
+  &::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg) translateY(-50%);
+    right: 16px;
+    top: 50%;
+  }
 `;
 
 export default Contents;
