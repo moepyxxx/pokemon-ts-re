@@ -25,7 +25,7 @@ import { POKEMON_URL, TYPE_URL } from "./url";
     const name = await getTypeName(ids[i]);
     types.push({
       name,
-      id: Number(id)
+      id: Number(ids[i])
     })
   }
   return types;
