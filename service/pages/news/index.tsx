@@ -27,7 +27,7 @@ export default function News({ news, isNext }: InferGetServerSidePropsType<typeo
 
 export const getServerSideProps: GetServerSideProps = async () => {
 
-  const { news, isNext } = await fetch (`${process.env.NEXT_PUBLIC_API_URL}/api/news`).then(res => res.json());
+  const { news, isNext } = await fetch (`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/news`).then(res => res.json());
   return {
     props: {
       news,
