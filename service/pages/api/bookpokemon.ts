@@ -9,11 +9,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const fetchIdUrl = `${POKEMON_URL}?limit=${limit}&offset=${offset}`;
 
+  let isNext: boolean;
+
   const pokemonIds: string[] = await fetch(fetchIdUrl)
     .then(res => res.json())
-    .then(json => json.results.map(json => {
-      return json.url.replace(POKEMON_URL, '').replace('/', '');
-    }))
+    .then(json => {
+      isNext = json.next ? true : false;
+      return json.results.map(json => 
+        json.url.replace(POKEMON_URL, '').replace('/', ''))
+    })
   ;
   
   const pokemons: BookPokemon[] = [];
@@ -23,6 +27,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     pokemons.push(pokemon);
   }
 
-  res.status(200).json(pokemons);
+  res.status(200).json({
+    result: pokemons,
+    isNext
+  });
 }
 
