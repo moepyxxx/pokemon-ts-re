@@ -19,7 +19,7 @@ const Panel: React.FC<Props> = ({ pokemon }) => {
           <Name>{pokemon.name}</Name>
           <TypesList>
             {pokemon.types.map(type => {
-              return ( <Type key={type.id} type={1}>{type.name} ({type.id})</Type>);
+              return ( <Type key={type.id} type={type.id}>{type.name}</Type>);
             })}
           </TypesList>
         </Main>
@@ -70,10 +70,51 @@ export const TypesList = styled.ul`
 export const Type = styled.li<{ type: number }>`
   display: inline-block;
   padding: 0 12px 2px;
-  background-color: #10D824;
   border-radius: 16px;
   font-size: 11px;
   margin: 0 2px;
+  ${({ type }) => {
+    switch (type) {
+      case 1:
+        return `background-color: #f5f5f5;`;
+      case 2:
+        return `background-color: #ffe4c4;`;
+      case 3:
+        return `background-color: #b0c4de;`;
+      case 4:
+        return `background-color: #800080; color: #fff;`;
+      case 5:
+        return `background-color: #cd853f; color: #fff;`;
+      case 6:
+        return `background-color: #8b4513; color: #fff;`;
+      case 7:
+        return `background-color: #bdb76b;`;
+      case 8:
+        return `background-color: #9370db;`;
+      case 9:
+        return `background-color: #a9a9a9;`;
+      case 10:
+        return `background-color: #ff4500; color: #fff;`;
+      case 11:
+        return `background-color: #1e90ff; color: #fff;`;
+      case 12:
+        return `background-color: #32cd32;`;
+      case 13:
+        return `background-color: #ffff00;`;
+      case 14:
+        return `background-color: #ffc0cb;`;
+      case 15:
+        return `background-color: #afeeee;`;
+      case 16:
+        return `background-color: #8b0000; color: #fff;`;
+      case 17:
+        return `background-color: #4e454a; color: #fff;`;
+      case 18:
+        return `background-color: #ffe4e1;`;
+      default:
+        return `background-color: #f5f5f5;`;
+    }
+  }}
 `;
 
 export default Panel;
