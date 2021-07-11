@@ -11,7 +11,7 @@ export default function Home({ initialPokemons, isNext }: InferGetServerSideProp
 
   const more = async () => {
     setPager(pager + 1);
-    const { result, isNext } = await fetch (`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/bookpokemon/?offset=${pager * 20}&limit=20`).then(res => res.json());
+    const { result, isNext } = await fetch (`${process.env.NEXT_PUBLIC_PROTOCOL}${process.env.NEXT_PUBLIC_VERCEL_URL}/api/bookpokemon/?offset=${pager * 20}&limit=20`).then(res => res.json());
     setPokemons(pokemons.concat(result));
     setNext(isNext);
   }
@@ -32,7 +32,7 @@ export default function Home({ initialPokemons, isNext }: InferGetServerSideProp
 
 export const getServerSideProps: GetServerSideProps = async () => {
 
-  const { result, isNext } = await fetch (`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/bookpokemon`).then(res => res.json());
+  const { result, isNext } = await fetch (`${process.env.NEXT_PUBLIC_PROTOCOL}${process.env.NEXT_PUBLIC_VERCEL_URL}/api/bookpokemon`).then(res => res.json());
   return {
     props: {
       initialPokemons: result,
