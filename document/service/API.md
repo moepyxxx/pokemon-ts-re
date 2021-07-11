@@ -8,11 +8,12 @@
       count: number
     }
     - response: {
-      BookPokemon[]
+      pokemons: BookPokemon[]
+      isNext: boolean
     }
 
-  - id
-    GET : 詳細の取得
+  - :id
+    - GET : 詳細の取得
       - request: {
         id: number
       }
