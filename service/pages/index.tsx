@@ -1,17 +1,17 @@
 import Link from 'next/link'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { BookPokemon } from '../types/pokemon/BookPokemon'
+import { SummaryBookPokemon } from '../types/pokemon/SummaryBookPokemon'
 import { useState } from 'react'
 
 export default function Home({ initialPokemons, isNext }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 
   const [pager, setPager] = useState<number>(1);
   const [next, setNext] = useState<boolean>(isNext);
-  const [pokemons, setPokemons] = useState<BookPokemon[]>(initialPokemons);
+  const [pokemons, setPokemons] = useState<SummaryBookPokemon[]>(initialPokemons);
 
   const more = async () => {
     setPager(pager + 1);
-    const { result, isNext } = await fetch (`${process.env.NEXT_PUBLIC_API}bookpokemon/?offset=${pager * 20}&limit=20`).then(res => res.json());
+    const { result, isNext } = await fetch (`${process.env.NEXT_PUBLIC_PROTOCOL}${process.env.NEXT_PUBLIC_VERCEL_URL}/api/bookpokemon/?offset=${pager * 20}&limit=20`).then(res => res.json());
     setPokemons(pokemons.concat(result));
     setNext(isNext);
   }
@@ -32,7 +32,7 @@ export default function Home({ initialPokemons, isNext }: InferGetServerSideProp
 
 export const getServerSideProps: GetServerSideProps = async () => {
 
-  const { result, isNext } = await fetch (`${process.env.NEXT_PUBLIC_API}bookpokemon`).then(res => res.json());
+  const { result, isNext } = await fetch (`${process.env.NEXT_PUBLIC_PROTOCOL}${process.env.NEXT_PUBLIC_VERCEL_URL}/api/bookpokemon`).then(res => res.json());
   return {
     props: {
       initialPokemons: result,
