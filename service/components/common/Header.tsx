@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const Header = () => {
   return(
     <HeaderSection>
-      <Logo />
+      <Logo type="normal" />
       <Nav />
     </HeaderSection>
   )
