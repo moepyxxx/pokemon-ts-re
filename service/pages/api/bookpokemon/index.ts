@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import getSummaryBookPokemon from '../../lib/pokemon/getSummaryBookPokemon';
-import { POKEMON_URL } from '../../lib/pokemon/url';
-import { SummaryBookPokemon } from '../../types/pokemon/SummaryBookPokemon';
+import getSummaryBookPokemon from '../../../lib/pokemon/getSummaryBookPokemon';
+import { POKEMON_URL } from '../../../lib/pokemon/url';
+import { SummaryBookPokemon } from '../../../types/pokemon/SummaryBookPokemon';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const limit = req.query.limit ?? 20;
