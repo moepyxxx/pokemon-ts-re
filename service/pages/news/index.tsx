@@ -1,8 +1,8 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { useState } from 'react'
-import Header from '../../components/Header';
+import Header from '../../components/common/Header';
 import NewsContents from '../../components/news/Contents';
-import PageTitle from '../../components/PageTitle';
+import PageTitle from '../../components/common/PageTitle';
 
 export default function News({ news, isNext }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 

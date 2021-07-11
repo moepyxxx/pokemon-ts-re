@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import News from './image/News';
-import Book from './image/Book';
+import News from '../image/News';
+import Book from '../image/Book';
 
 type TMenu = 'book' | 'news';
 type Props = {

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import styled from 'styled-components';
-import Ball from './image/Ball';
+import Ball from '../image/Ball';
 
 const Logo = () => {
   return(
