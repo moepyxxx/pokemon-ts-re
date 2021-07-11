@@ -1,9 +1,9 @@
 import Link from 'next/link'
-import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { SummaryBookPokemon } from '../types/pokemon/SummaryBookPokemon'
 import { useState } from 'react'
 
-export default function Home({ initialPokemons, isNext }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Home({ initialPokemons, isNext }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 
   const [pager, setPager] = useState<number>(1);
   const [next, setNext] = useState<boolean>(isNext);
@@ -30,7 +30,7 @@ export default function Home({ initialPokemons, isNext }: InferGetStaticPropsTyp
   )  
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
 
   const { result, isNext } = await fetch (`${process.env.NEXT_PUBLIC_API}bookpokemon`).then(res => res.json());
   return {

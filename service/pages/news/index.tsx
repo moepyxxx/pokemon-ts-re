@@ -1,8 +1,8 @@
 import Link from 'next/link'
-import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { useState } from 'react'
 
-export default function News({ news, isNext }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function News({ news, isNext }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 
   const [pager,] = useState<number>(1);
   const [next,] = useState<boolean>(isNext);
@@ -25,7 +25,7 @@ export default function News({ news, isNext }: InferGetStaticPropsType<typeof ge
   )  
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
 
   const { news, isNext } = await fetch (`${process.env.NEXT_PUBLIC_API}news`).then(res => res.json());
   return {
