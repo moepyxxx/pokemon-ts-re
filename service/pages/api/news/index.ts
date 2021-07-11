@@ -6,11 +6,23 @@ import client from '../../../lib/contentful/client';
 import getSummaryNews from "../../../lib/contentful/getSummaryNews";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+
+  const MAX_ENTRIES = 20;
+
+  const limit = req.query.limit ?? MAX_ENTRIES;
+  const offset = req.query.offset ?? 0;
+  
+  let isNext: boolean = true;
   
   const results: Entry<any>[] = await client.getEntries({
-    content_type: 'blogPost'
+    content_type: 'blogPost',
+    limit,
+    skip: offset
   })
-    .then(res => res.items)
+    .then(res => {
+      isNext = res.total === limit ? true : false;
+      return res.items;
+    })
   ;
   
   if (!results) {
@@ -19,5 +31,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const news: SummaryNews[] = getSummaryNews(results);
 
-  res.status(200).json(news);
+  res.status(200).json({
+    news,
+    isNext
+  });
 }
