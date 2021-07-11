@@ -10,9 +10,6 @@ const Nav = () => {
       <List>
         <Link href="/news">更新情報</Link>
       </List>
-      <List>
-        <Link href="/disable">ポケモンを探しにいく</Link>
-      </List>
     </Ul>
   )
 }
