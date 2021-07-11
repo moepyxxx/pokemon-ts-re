@@ -4,8 +4,8 @@ import { POKEMON_URL } from '../../lib/pokemon/url';
 import { BookPokemon } from '../../types/pokemon/BookPokemon';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const limit = req.body.limit ?? 20;
-  const offset = req.body.offset ?? 0;
+  const limit = req.query.limit ?? 20;
+  const offset = req.query.offset ?? 0;
 
   const fetchIdUrl = `${POKEMON_URL}?limit=${limit}&offset=${offset}`;
 
