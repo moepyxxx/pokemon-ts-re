@@ -1,4 +1,4 @@
-import { BookPokemon } from "../../types/pokemon/BookPokemon";
+import { SummaryBookPokemon } from "../../types/pokemon/SummaryBookPokemon";
 import getPokemonImage from "./getPokemonImage";
 import getPokemonName from "./getPokemonName";
 import getPokemonType from "./getPokemonType";
@@ -6,9 +6,9 @@ import getPokemonType from "./getPokemonType";
 /**
  * 日本語のポケモン名を取得
  * @param {string} id 
- * @returns {BookPokemon} pokemon
+ * @returns {SummaryBookPokemon} pokemon
  */
-const getBookPokemon = async (id: string): Promise<BookPokemon> => {
+const getSummaryBookPokemon = async (id: string): Promise<SummaryBookPokemon> => {
 
   const name = await getPokemonName(id);
   const image = await getPokemonImage(id);
@@ -21,4 +21,4 @@ const getBookPokemon = async (id: string): Promise<BookPokemon> => {
     types
   });
 }
-export default getBookPokemon;
+export default getSummaryBookPokemon;

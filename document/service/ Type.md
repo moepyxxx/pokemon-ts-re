@@ -7,16 +7,16 @@
 ## Pokemon
 決めながらやって、随時決まったらちょっと更新する。
 
-### BookPokemon
+### SummaryBookPokemon
 
 - id: number
 - name: string
 - image: string
 - type: Type[]
 
-### DetailBookPokemon
+### BookPokemon
 
-- BookPokemon &&
+- SummaryBookPokemon &&
 - abilities: object[]
   - name: string
   - description: string

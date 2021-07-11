@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import getBookPokemon from '../../lib/pokemon/getBookPokemon';
+import getSummaryBookPokemon from '../../lib/pokemon/getSummaryBookPokemon';
 import { POKEMON_URL } from '../../lib/pokemon/url';
-import { BookPokemon } from '../../types/pokemon/BookPokemon';
+import { SummaryBookPokemon } from '../../types/pokemon/SummaryBookPokemon';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const limit = req.query.limit ?? 20;
@@ -20,10 +20,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     })
   ;
   
-  const pokemons: BookPokemon[] = [];
+  const pokemons: SummaryBookPokemon[] = [];
 
   for (let i = 0; i < pokemonIds.length; i++) {
-    const pokemon: BookPokemon = await getBookPokemon(pokemonIds[i]);
+    const pokemon: SummaryBookPokemon = await getSummaryBookPokemon(pokemonIds[i]);
     pokemons.push(pokemon);
   }
 

@@ -8,7 +8,7 @@
       count: number
     }
     - response: {
-      pokemons: BookPokemon[]
+      pokemons: SummaryBookPokemon[]
       isNext: boolean
     }
 
@@ -18,9 +18,9 @@
         id: number
       }
       - response: {
-        pokemon: BookDetailPokemon
-        next: BookPokemon
-        prev: BookPokemon
+        pokemon: BookPokemon
+        next: SummaryBookPokemon
+        prev: SummaryBookPokemon
       }
 
 ## ニュース情報の一覧取得
