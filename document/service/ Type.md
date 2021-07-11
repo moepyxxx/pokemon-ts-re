@@ -23,3 +23,21 @@
 - height
 - weight
 - species: string
+
+## News
+Contentfulから抜き出すデータ。
+
+### SummaryNews
+
+- id: number
+- title: string
+- pokemon: string
+- published: Date
+
+### News
+
+- id: number
+- title: string
+- pokemon: string
+- comment: string
+- published: Date
