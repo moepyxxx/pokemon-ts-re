@@ -1,12 +1,7 @@
 import Logo from "./Logo";
 import styled from 'styled-components';
-import { RootState } from '../../store'
-import { useSelector, useDispatch } from 'react-redux'
 
 const Footer = () => {
-  const pokemon = useSelector((state: RootState) => state.pokemon)
-  const dispatch = useDispatch()
-  console.log(pokemon);
   return(
     <FooterSection>
       <Logo type="black" />
