@@ -1,10 +1,15 @@
 
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
+
 import { RootState } from '../../store';
 import { SummaryBookPokemon } from '../../types/pokemon/SummaryBookPokemon';
+
 import Panel from './Panel';
 import UnknownPanel from './UnknownPanel';
+
+type TBookQuery = 'all' | 'get' | 'encounter';
 
 type Props = {
   pokemons: SummaryBookPokemon[];
@@ -17,26 +22,70 @@ type Props = {
 const Contents: React.FC<Props> = ({ pokemons, pager, next, viewMore, isUseUnknown }) => {
 
   const statuses = useSelector((state: RootState) => state.pokemon);
+  const router = useRouter();
+  const { book } = router.query;
 
+  const isAllActive = (book === 'all' || !book);
+  const isGetActive = book === 'get';
+  const isEncounterActive = book === 'encounter';
+  
+  const moveTo = (move: TBookQuery) : void => {
+    router.push({
+      pathname:"/bookpokemon",
+      query: { book: move }
+    });
+  }
 
+  const mainComponent = () => {
+    if (book === 'get') {
+      return (
+        <List>
+          {pokemons.map(pokemon => {
+            const isEncounter = statuses.encounter.find(status => status === Number(pokemon.id));
+            const isGet = statuses.get.find(status => status === Number(pokemon.id));
+            if (isEncounter || isGet) {
+              return (<Panel key={pokemon.id} pokemon={pokemon} />)
+            }
+          })}
+        </List>
+      );
+    } else {
+      return (
+        <>
+          <List>
+            {pokemons.map(pokemon => {
+              const isEncounter = statuses.encounter.find(status => status === Number(pokemon.id));
+              const isGet = statuses.get.find(status => status === Number(pokemon.id));
+              if (isEncounter || isGet || isUseUnknown) {
+                return (<Panel key={pokemon.id} pokemon={pokemon} />)
+              }
+              return (<UnknownPanel key={pokemon.id} id={pokemon.id} />)
+            })}
+          </List>
+
+          <Pager>
+            { next ? <Button onClick={viewMore}>もっと見る</Button> : ''}
+          </Pager>
+        </>
+      );
+    }
+  }
+
+  const filterLinkComponent = () => {
+    if (isUseUnknown) return;
+    return (
+      <FilterLink>
+        <FilterLnkList isLink isActive={isAllActive} onClick={() => moveTo('all')}>すべての<br />ずかん</FilterLnkList>
+        <FilterLnkList isLink isActive={isGetActive} onClick={() => moveTo('get')}>つかまえた<br />ポケモン</FilterLnkList>
+        <FilterLnkList isLink={false} isActive={isEncounterActive} onClick={() => moveTo('encounter')}>みつけた<br />ポケモン</FilterLnkList>
+      </FilterLink>
+    );
+  }
 
   return (
     <Section>
-      <List>
-        {pokemons.map(pokemon => {
-          const isEncounter = statuses.encounter.find(status => status === Number(pokemon.id));
-          const isGet = statuses.get.find(status => status === Number(pokemon.id));
-          if (isEncounter || isGet || isUseUnknown) {
-            return (<Panel key={pokemon.id} pokemon={pokemon} />)
-          }
-          return (<UnknownPanel key={pokemon.id} id={pokemon.id} />)
-        })}
-      </List>
-
-      <Pager>
-        { next ? <Button onClick={viewMore}>もっと見る</Button> : ''}
-      </Pager>
-
+      {filterLinkComponent()}
+      {mainComponent()}
     </Section>
   );
 }
@@ -47,12 +96,56 @@ export const Section = styled.section`
   max-width: 800px;
 `;
 
+export const FilterLink = styled.div`
+  margin: 0 auto 80px;
+  max-width: 500px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const FilterLnkList = styled.button<{ isActive: boolean, isLink: boolean }>`
+  border: none;
+  background-color: transparent;
+  line-height: 2;
+  font-size: 16px;
+  cursor: pointer;
+  ${({ isLink }) => {
+    if (isLink) return;
+    return `
+      text-decoration: line-through;
+      pointer-events: none;
+    `;
+  }}
+  ${({ isActive }) => {
+    if (!isActive) return;
+    return `
+      position: relative;
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #000;
+        width: 20px;
+        height: 2px;
+    `;
+  }}
+`;
+
 export const List = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 60px;
+  &:after {
+    content: '';
+    display: block;
+    width: calc(25% - 10px);
+  }
 `;
 
 export const Pager = styled.div`
