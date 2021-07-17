@@ -5,7 +5,7 @@ import Header from '../../components/common/Header';
 import NewsContents from '../../components/news/Contents';
 import PageTitle from '../../components/common/PageTitle';
 import Footer from '../../components/common/Footer';
-import getSummaryNewsList from '../../lib/contentful/getSummaryNewsList';
+import getSummaryNewsList from '../../lib/news/getSummaryNewsList';
 
 export default function News({ news, isNext }: InferGetStaticPropsType<typeof getStaticProps>) {
 
