@@ -1,12 +1,13 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useState } from 'react'
 
 import Header from '../../components/common/Header';
 import NewsContents from '../../components/news/Contents';
 import PageTitle from '../../components/common/PageTitle';
 import Footer from '../../components/common/Footer';
+import getSummaryNewsList from '../../lib/news/getSummaryNewsList';
 
-export default function News({ news, isNext }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function News({ news, isNext }: InferGetStaticPropsType<typeof getStaticProps>) {
 
   const [pager,] = useState<number>(1);
   const [next,] = useState<boolean>(isNext);
@@ -23,13 +24,15 @@ export default function News({ news, isNext }: InferGetServerSidePropsType<typeo
 }
 
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
 
-  const { news, isNext } = await fetch (`${process.env.NEXT_PUBLIC_PROTOCOL}${process.env.NEXT_PUBLIC_VERCEL_URL}/api/news`).then(res => res.json());
+  const { news, isNext } = await getSummaryNewsList();
   return {
     props: {
       news,
       isNext
-    }
+    },
+    // 60秒ごとに再レンダリング（記事が増える場合があるため）
+    revalidate: 60
   };
 }
