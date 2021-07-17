@@ -25,7 +25,13 @@ export default function All({ initialPokemons, isNext }: InferGetStaticPropsType
     <>
       <Header />
       <PageTitle title='すべてのポケモン図鑑' menu='book' />
-      <BookPokemonContents next={next} pokemons={pokemons} pager={pager} viewMore={more} isUseUnknown />
+      <BookPokemonContents
+        next={next}
+        pokemons={pokemons}
+        pager={pager}
+        viewMore={more}
+        isUseUnknown
+      />
       <Footer />
     </>
   )  
