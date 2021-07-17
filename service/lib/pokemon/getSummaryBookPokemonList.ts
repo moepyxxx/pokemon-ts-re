@@ -1,4 +1,4 @@
-import getSummaryBookPokemon from './getSummaryBookPokemon';
+import formatSummaryBookPokemon from './formatSummaryBookPokemon';
 import { POKEMON_URL } from './url';
 import { SummaryBookPokemon } from '../../types/pokemon/SummaryBookPokemon';
 
@@ -26,7 +26,7 @@ const getSummaryBookPokemonList = async (limit = 20, offset = 0) => {
   const pokemons: SummaryBookPokemon[] = [];
 
   for (let i = 0; i < pokemonIds.length; i++) {
-    const pokemon: SummaryBookPokemon = await getSummaryBookPokemon(pokemonIds[i]);
+    const pokemon: SummaryBookPokemon = await formatSummaryBookPokemon(pokemonIds[i]);
     pokemons.push(pokemon);
   }
 

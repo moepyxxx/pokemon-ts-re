@@ -8,7 +8,7 @@ import getPokemonType from "./getPokemonType";
  * @param {string} id 
  * @returns {SummaryBookPokemon} pokemon
  */
-const getSummaryBookPokemon = async (id: string): Promise<SummaryBookPokemon> => {
+const formatSummaryBookPokemon = async (id: string): Promise<SummaryBookPokemon> => {
 
   const name = await getPokemonName(id);
   const image = await getPokemonImage(id);
@@ -21,4 +21,4 @@ const getSummaryBookPokemon = async (id: string): Promise<SummaryBookPokemon> =>
     types
   });
 }
-export default getSummaryBookPokemon;
+export default formatSummaryBookPokemon;
