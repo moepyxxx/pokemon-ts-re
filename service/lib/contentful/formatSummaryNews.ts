@@ -1,7 +1,7 @@
 import { Entry } from "contentful";
 import { SummaryNews } from "../../types/news/SummaryNews";
 
-const getSummaryNews = (assets: Entry<any>[]): SummaryNews[] => {
+const formatSummaryNews = (assets: Entry<any>[]): SummaryNews[] => {
   const news: SummaryNews[] = [];
 
   for (let i = 0; i < assets.length; i++) {
@@ -11,7 +11,7 @@ const getSummaryNews = (assets: Entry<any>[]): SummaryNews[] => {
       title: field.title,
       pokemon: {
         image: field.pokemon.fields.file.url,
-        title: field.pokemon.fields.description,
+        title: field.pokemon.fields.description || null
       },
       published: field.published
     })
@@ -19,4 +19,4 @@ const getSummaryNews = (assets: Entry<any>[]): SummaryNews[] => {
 
   return news;
 }
-export default getSummaryNews;
+export default formatSummaryNews;
