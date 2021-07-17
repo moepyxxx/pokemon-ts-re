@@ -31,6 +31,8 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       news,
       isNext
-    }
+    },
+    // 60秒ごとに再レンダリング（記事が増える場合があるため）
+    revalidate: 60
   };
 }
