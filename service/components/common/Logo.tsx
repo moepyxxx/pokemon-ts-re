@@ -23,6 +23,7 @@ export const Section = styled.h1`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const Text = styled.div<{ type: TType }>`

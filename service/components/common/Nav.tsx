@@ -5,7 +5,10 @@ const Nav = () => {
   return(
     <Ul>
       <List>
-        <Link href="/">ポケモン図鑑そうごう</Link>
+        <Link href="/bookpokemon">ポケモン図鑑そうごう</Link>
+      </List>
+      <List>
+        <Link href="/search">ポケモンを探す</Link>
       </List>
       <List>
         <Link href="/news">更新情報</Link>
