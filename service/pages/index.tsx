@@ -1,6 +1,5 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useState } from 'react'
-
 import { SummaryBookPokemon } from '../types/pokemon/SummaryBookPokemon'
 
 import Header from '../components/common/Header';
