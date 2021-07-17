@@ -1,12 +1,13 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useState } from 'react'
-import { SummaryBookPokemon } from '../types/pokemon/SummaryBookPokemon'
 
-import Header from '../components/common/Header';
-import PageTitle from '../components/common/PageTitle';
-import BookPokemonContents from '../components/bookpokemon/Contents';
-import Footer from '../components/common/Footer';
-import getSummaryBookPokemonList from '../lib/pokemon/getSummaryBookPokemonList';
+import Header from '../../components/common/Header';
+import PageTitle from '../../components/common/PageTitle';
+import BookPokemonContents from '../../components/bookpokemon/Contents';
+import Footer from '../../components/common/Footer';
+
+import getSummaryBookPokemonList from '../../lib/pokemon/getSummaryBookPokemonList';
+import { SummaryBookPokemon } from '../../types/pokemon/SummaryBookPokemon'
 
 export default function All({ initialPokemons, isNext }: InferGetStaticPropsType<typeof getStaticProps>) {
 
@@ -24,8 +25,8 @@ export default function All({ initialPokemons, isNext }: InferGetStaticPropsType
   return (
     <>
       <Header />
-      <PageTitle title='すべてのポケモン図鑑' menu='book' />
-      <BookPokemonContents next={next} pokemons={pokemons} pager={pager} viewMore={more} isUseUnknown />
+      <PageTitle title='ポケモン図鑑そうごう' menu='book' />
+      <BookPokemonContents next={next} pokemons={pokemons} pager={pager} viewMore={more} isUseUnknown={false}  />
       <Footer />
     </>
   )  
