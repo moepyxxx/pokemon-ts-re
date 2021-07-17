@@ -17,7 +17,7 @@ export default function All({ initialPokemons, isNext }: InferGetStaticPropsType
 
   const more = async () => {
     setPager(pager + 1);
-    const { result, isNext } = await getSummaryBookPokemonList(pager * 20, 20);
+    const { result, isNext } = await getSummaryBookPokemonList(20, pager * 20);
     setPokemons(pokemons.concat(result));
     setNext(isNext);
   }
