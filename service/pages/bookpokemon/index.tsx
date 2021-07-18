@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import Header from '../../components/common/Header';
 import PageTitle from '../../components/common/PageTitle';
-import BookPokemonContents from '../../components/bookpokemon/Contents';
+import BookPokemonContents from '../../components/bookpokemon/BookContents';
 import Footer from '../../components/common/Footer';
 
 import getSummaryBookPokemonList from '../../lib/pokemon/getSummaryBookPokemonList';
@@ -26,7 +26,7 @@ export default function All({ initialPokemons, isNext }: InferGetStaticPropsType
     <>
       <Header />
       <PageTitle title='ポケモン図鑑そうごう' menu='book' />
-      <BookPokemonContents next={next} pokemons={pokemons} pager={pager} viewMore={more} isUseUnknown={false}  />
+      <BookPokemonContents next={next} pokemons={pokemons} pager={pager} viewMore={more} />
       <Footer />
     </>
   )  

@@ -4,7 +4,7 @@ import { SummaryBookPokemon } from '../types/pokemon/SummaryBookPokemon'
 
 import Header from '../components/common/Header';
 import PageTitle from '../components/common/PageTitle';
-import BookPokemonContents from '../components/bookpokemon/Contents';
+import BookPokemonContents from '../components/bookpokemon/AllBookContents';
 import Footer from '../components/common/Footer';
 import getSummaryBookPokemonList from '../lib/pokemon/getSummaryBookPokemonList';
 
@@ -30,7 +30,6 @@ export default function All({ initialPokemons, isNext }: InferGetStaticPropsType
         pokemons={pokemons}
         pager={pager}
         viewMore={more}
-        isUseUnknown
       />
       <Footer />
     </>

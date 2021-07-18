@@ -15,11 +15,10 @@ type Props = {
   pokemons: SummaryBookPokemon[];
   pager: number;
   next: boolean;
-  isUseUnknown: boolean;
   viewMore: () => void;
 }
 
-const Contents: React.FC<Props> = ({ pokemons, pager, next, viewMore, isUseUnknown }) => {
+const BookContents: React.FC<Props> = ({ pokemons, pager, next, viewMore }) => {
 
   const statuses = useSelector((state: RootState) => state.pokemon);
   const router = useRouter();
@@ -36,17 +35,12 @@ const Contents: React.FC<Props> = ({ pokemons, pager, next, viewMore, isUseUnkno
     });
   }
 
-  const mainComponent = () => {
+  const queryComponent = () => {
     if (book === 'get') {
       return (
         <List>
-          {pokemons.map(pokemon => {
-            const isEncounter = statuses.encounter.find(status => status === Number(pokemon.id));
-            const isGet = statuses.get.find(status => status === Number(pokemon.id));
-            if (isEncounter || isGet) {
-              return (<Panel key={pokemon.id} pokemon={pokemon} />)
-            }
-          })}
+          
+          <p>いないよ</p>
         </List>
       );
     } else {
@@ -56,7 +50,7 @@ const Contents: React.FC<Props> = ({ pokemons, pager, next, viewMore, isUseUnkno
             {pokemons.map(pokemon => {
               const isEncounter = statuses.encounter.find(status => status === Number(pokemon.id));
               const isGet = statuses.get.find(status => status === Number(pokemon.id));
-              if (isEncounter || isGet || isUseUnknown) {
+              if (isEncounter || isGet) {
                 return (<Panel key={pokemon.id} pokemon={pokemon} />)
               }
               return (<UnknownPanel key={pokemon.id} id={pokemon.id} />)
@@ -71,21 +65,21 @@ const Contents: React.FC<Props> = ({ pokemons, pager, next, viewMore, isUseUnkno
     }
   }
 
-  const filterLinkComponent = () => {
-    if (isUseUnknown) return;
-    return (
+  return (
+    <Section>
+
       <FilterLink>
         <FilterLnkList isLink isActive={isAllActive} onClick={() => moveTo('all')}>すべての<br />ずかん</FilterLnkList>
         <FilterLnkList isLink isActive={isGetActive} onClick={() => moveTo('get')}>つかまえた<br />ポケモン</FilterLnkList>
         <FilterLnkList isLink={false} isActive={isEncounterActive} onClick={() => moveTo('encounter')}>みつけた<br />ポケモン</FilterLnkList>
       </FilterLink>
-    );
-  }
 
-  return (
-    <Section>
-      {filterLinkComponent()}
-      {mainComponent()}
+      {queryComponent()}
+
+      <Pager>
+        { next ? <Button onClick={viewMore}>もっと見る</Button> : ''}
+      </Pager>
+
     </Section>
   );
 }
@@ -173,4 +167,4 @@ export const Button = styled.button`
   }
 `;
 
-export default Contents;
+export default BookContents;
