@@ -1,10 +1,12 @@
 
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { RootState } from '../../store';
 import { SummaryBookPokemon } from '../../types/pokemon/SummaryBookPokemon';
+import formatSummaryBookPokemon from '../../lib/pokemon/formatSummaryBookPokemon';
 
 import Panel from './Panel';
 import UnknownPanel from './UnknownPanel';
@@ -15,15 +17,21 @@ type Props = {
   pokemons: SummaryBookPokemon[];
   pager: number;
   next: boolean;
-  isUseUnknown: boolean;
   viewMore: () => void;
 }
 
-const Contents: React.FC<Props> = ({ pokemons, pager, next, viewMore, isUseUnknown }) => {
+const BookContents: React.FC<Props> = ({ pokemons, pager, next, viewMore }) => {
 
-  const statuses = useSelector((state: RootState) => state.pokemon);
+  const myBookIds = useSelector((state: RootState) => state.pokemon);
   const router = useRouter();
+  const [myBookPokemon, setMyBookPokemon] = useState<SummaryBookPokemon[]>([]);
   const { book } = router.query;
+
+  useEffect(() => {
+    Promise.all(myBookIds.get.map(async id => {
+      return await formatSummaryBookPokemon(id.toString());
+    })).then(pokemons => setMyBookPokemon(pokemons));
+  }, []);
 
   const isAllActive = (book === 'all' || !book);
   const isGetActive = book === 'get';
@@ -36,16 +44,14 @@ const Contents: React.FC<Props> = ({ pokemons, pager, next, viewMore, isUseUnkno
     });
   }
 
-  const mainComponent = () => {
+  const queryComponent = () => {
     if (book === 'get') {
       return (
         <List>
-          {pokemons.map(pokemon => {
-            const isEncounter = statuses.encounter.find(status => status === Number(pokemon.id));
-            const isGet = statuses.get.find(status => status === Number(pokemon.id));
-            if (isEncounter || isGet) {
-              return (<Panel key={pokemon.id} pokemon={pokemon} />)
-            }
+          {myBookPokemon.length === 0
+            ? <p>まだいないよ</p>
+            : myBookPokemon.map( (pokemon) => {
+                return (<Panel key={pokemon.id} pokemon={pokemon} />);
           })}
         </List>
       );
@@ -54,9 +60,9 @@ const Contents: React.FC<Props> = ({ pokemons, pager, next, viewMore, isUseUnkno
         <>
           <List>
             {pokemons.map(pokemon => {
-              const isEncounter = statuses.encounter.find(status => status === Number(pokemon.id));
-              const isGet = statuses.get.find(status => status === Number(pokemon.id));
-              if (isEncounter || isGet || isUseUnknown) {
+              const isEncounter = myBookIds.encounter.find(status => status === Number(pokemon.id));
+              const isGet = myBookIds.get.find(status => status === Number(pokemon.id));
+              if (isEncounter || isGet) {
                 return (<Panel key={pokemon.id} pokemon={pokemon} />)
               }
               return (<UnknownPanel key={pokemon.id} id={pokemon.id} />)
@@ -71,21 +77,17 @@ const Contents: React.FC<Props> = ({ pokemons, pager, next, viewMore, isUseUnkno
     }
   }
 
-  const filterLinkComponent = () => {
-    if (isUseUnknown) return;
-    return (
+  return (
+    <Section>
+
       <FilterLink>
         <FilterLnkList isLink isActive={isAllActive} onClick={() => moveTo('all')}>すべての<br />ずかん</FilterLnkList>
         <FilterLnkList isLink isActive={isGetActive} onClick={() => moveTo('get')}>つかまえた<br />ポケモン</FilterLnkList>
         <FilterLnkList isLink={false} isActive={isEncounterActive} onClick={() => moveTo('encounter')}>みつけた<br />ポケモン</FilterLnkList>
       </FilterLink>
-    );
-  }
 
-  return (
-    <Section>
-      {filterLinkComponent()}
-      {mainComponent()}
+      {queryComponent()}
+
     </Section>
   );
 }
@@ -173,4 +175,4 @@ export const Button = styled.button`
   }
 `;
 
-export default Contents;
+export default BookContents;
