@@ -143,10 +143,13 @@ export const List = styled.div`
   align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 60px;
-  &:after {
+  &:after, &:before {
     content: '';
     display: block;
     width: calc(25% - 10px);
+  }
+  &:before {
+    order: 1;
   }
 `;
 
