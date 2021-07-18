@@ -2,11 +2,6 @@ import { SearchPlace } from "../../types/search/SearchPlace";
 
 const PLACES: SearchPlace[] = [
   {
-    slug: 'hakase',
-    text: 'はかせのところ',
-    icon: '👤',
-    pokemonTypeIds: []
-  }, {
     slug: 'mizube',
     text: 'みずべ',
     icon: '🐳',
