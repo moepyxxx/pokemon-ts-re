@@ -1,10 +1,12 @@
 
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { RootState } from '../../store';
 import { SummaryBookPokemon } from '../../types/pokemon/SummaryBookPokemon';
+import formatSummaryBookPokemon from '../../lib/pokemon/formatSummaryBookPokemon';
 
 import Panel from './Panel';
 import UnknownPanel from './UnknownPanel';
@@ -20,9 +22,16 @@ type Props = {
 
 const BookContents: React.FC<Props> = ({ pokemons, pager, next, viewMore }) => {
 
-  const myBook = useSelector((state: RootState) => state.pokemon);
+  const myBookIds = useSelector((state: RootState) => state.pokemon);
   const router = useRouter();
+  const [myBookPokemon, setMyBookPokemon] = useState<SummaryBookPokemon[]>([]);
   const { book } = router.query;
+
+  useEffect(() => {
+    Promise.all(myBookIds.get.map(async id => {
+      return await formatSummaryBookPokemon(id.toString());
+    })).then(pokemons => setMyBookPokemon(pokemons));
+  }, []);
 
   const isAllActive = (book === 'all' || !book);
   const isGetActive = book === 'get';
@@ -39,8 +48,11 @@ const BookContents: React.FC<Props> = ({ pokemons, pager, next, viewMore }) => {
     if (book === 'get') {
       return (
         <List>
-          
-          <p>いないよ</p>
+          {myBookPokemon.length === 0
+            ? <p>まだいないよ</p>
+            : myBookPokemon.map( (pokemon) => {
+                return (<Panel key={pokemon.id} pokemon={pokemon} />);
+          })}
         </List>
       );
     } else {
@@ -48,8 +60,8 @@ const BookContents: React.FC<Props> = ({ pokemons, pager, next, viewMore }) => {
         <>
           <List>
             {pokemons.map(pokemon => {
-              const isEncounter = myBook.encounter.find(status => status === Number(pokemon.id));
-              const isGet = myBook.get.find(status => status === Number(pokemon.id));
+              const isEncounter = myBookIds.encounter.find(status => status === Number(pokemon.id));
+              const isGet = myBookIds.get.find(status => status === Number(pokemon.id));
               if (isEncounter || isGet) {
                 return (<Panel key={pokemon.id} pokemon={pokemon} />)
               }
