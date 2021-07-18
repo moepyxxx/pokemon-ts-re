@@ -1,11 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export type BookPokemonState = {
+/**
+ * みつけたポケモン・ゲットしたポケモンの状態を管理する
+ */
+
+export type TMyBook = {
   get: number[]
   encounter: number[]
 };
 
-export const initialState: BookPokemonState = {
+export const initialState: TMyBook = {
   get: [],
   encounter: []
 };
@@ -14,11 +18,11 @@ type TAction = {
   status: 'get' | 'encounter',
   id: number
 }
-export const bookPokemonSlice = createSlice({
-  name: 'bookPokemon',
+export const myBookSlice = createSlice({
+  name: 'myBook',
   initialState,
   reducers: {
-    incrementPokemon: (state, action: PayloadAction<TAction>) => {
+    updateMyBook: (state, action: PayloadAction<TAction>) => {
 
       const ids = state.encounter.concat(action.payload.id);
 
@@ -37,5 +41,5 @@ export const bookPokemonSlice = createSlice({
     }
   },
 });
-export default bookPokemonSlice.reducer
-export const { incrementPokemon } = bookPokemonSlice.actions
+export default myBookSlice.reducer
+export const { updateMyBook } = myBookSlice.actions

@@ -20,7 +20,7 @@ type Props = {
 
 const BookContents: React.FC<Props> = ({ pokemons, pager, next, viewMore }) => {
 
-  const statuses = useSelector((state: RootState) => state.pokemon);
+  const myBook = useSelector((state: RootState) => state.pokemon);
   const router = useRouter();
   const { book } = router.query;
 
@@ -48,8 +48,8 @@ const BookContents: React.FC<Props> = ({ pokemons, pager, next, viewMore }) => {
         <>
           <List>
             {pokemons.map(pokemon => {
-              const isEncounter = statuses.encounter.find(status => status === Number(pokemon.id));
-              const isGet = statuses.get.find(status => status === Number(pokemon.id));
+              const isEncounter = myBook.encounter.find(status => status === Number(pokemon.id));
+              const isGet = myBook.get.find(status => status === Number(pokemon.id));
               if (isEncounter || isGet) {
                 return (<Panel key={pokemon.id} pokemon={pokemon} />)
               }

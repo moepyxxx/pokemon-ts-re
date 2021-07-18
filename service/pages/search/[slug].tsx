@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 
-import { incrementPokemon } from '../../store/pokemonSlice';
+import { updateMyBook } from '../../store/myBookSlice';
 
 import Header from '../../components/common/Header';
 import PageTitle from '../../components/common/PageTitle';
@@ -55,7 +55,7 @@ export default function SearchPage() {
   useEffect(() => {
     if (!pokemon) return;
 
-    dispatch(incrementPokemon({
+    dispatch(updateMyBook({
       status: 'get',
       id: pokemon.id
     }))
