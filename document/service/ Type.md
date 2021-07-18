@@ -41,3 +41,12 @@ Contentfulから抜き出すデータ。
 - pokemon: string
 - comment: string
 - published: Date
+
+## Search
+
+### SearchPlace
+
+- slug: string
+- icon: string
+- text: string
+- pokemonTypeIds: number[]
