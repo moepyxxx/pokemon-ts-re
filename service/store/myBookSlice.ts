@@ -30,12 +30,12 @@ export const myBookSlice = createSlice({
         case 'encounter' :
           return {
             ...state,
-            encouner: ids
+            encouner: [...state.encounter, action.payload.id]
           }
         case 'get' :
           return {
             ...state,
-            get: ids
+            get: [...state.get, action.payload.id]
           }
       }
     }
