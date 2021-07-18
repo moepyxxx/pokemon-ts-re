@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import Header from '../../components/common/Header';
@@ -8,13 +8,18 @@ import DuringSearch from '../../components/search/DuringSearch';
 import DetectPokemon from '../../components/search/DetectPokemon';
 
 import PLACES from '../../lib/database/places';
+import { SearchPlace } from '../../types/search/SearchPlace';
 
 export default function SearchPage() {
   const [duringSearch, setDuringSearch] = useState<boolean>(true);
-  const router = useRouter();
+  const [place, setPlace] = useState<SearchPlace>(null);
 
+  const router = useRouter();
   const { slug } = router.query;
-  const place = PLACES.find(place => place.slug === slug);
+
+  useEffect(() => {
+    setPlace(PLACES.find(place => place.slug === slug));
+  }, [slug]);
     
   return (
     <>
