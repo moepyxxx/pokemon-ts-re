@@ -38,3 +38,4 @@ export const bookPokemonSlice = createSlice({
   },
 });
 export default bookPokemonSlice.reducer
+export const { incrementPokemon } = bookPokemonSlice.actions

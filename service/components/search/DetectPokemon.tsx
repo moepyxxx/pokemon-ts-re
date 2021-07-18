@@ -2,13 +2,22 @@
 import Link from 'next/link';
 import styled from 'styled-components';
 
-const DetectPokemon: React.FC= () => {
+type Props = {
+  pokemon: {
+    name: string;
+    image: string;
+  }
+}
+const DetectPokemon: React.FC<Props> = ({ pokemon }) => {
+
+  if (!pokemon) return <></>;
+  
   return (
     <Detect>
-      <MainText>あ、フシギダネだ！ ゲットできたよ</MainText>
+      <MainText>あ、{pokemon.name}だ！ ゲットできたよ</MainText>
       <SubText>（ずかんに登録されるよ）</SubText>
       <Image>
-        <img src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png' alt='フシギダネ' width='80' height='80' />
+        <img src={pokemon.image} alt={pokemon.name} width='80' height='80' />
       </Image>
 
       <NextLink>
