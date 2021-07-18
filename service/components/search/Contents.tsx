@@ -35,6 +35,11 @@ export const List = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  &:after {
+    content: '';
+    display: block;
+    width: calc(calc(100% - 40px) / 3);
+  }
 `;
 
 export default Contents;

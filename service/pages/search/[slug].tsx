@@ -36,10 +36,15 @@ export default function SearchPage() {
 
     // 複数実行されることを防ぐ
     if (!slug) return;
-
     setPlace(PLACES.find(place => place.slug === slug));
 
-    searchPokemon()
+  }, [slug]);
+
+  // 場所情報がセットされたら発火
+  useEffect(() => {
+    if (!place) return;
+
+    searchPokemon(place.pokemonTypeIds)
       .then(res => {
         if (!res.result) return;
 
@@ -52,8 +57,9 @@ export default function SearchPage() {
       setDuringSearch(false);
     }, 3000);
 
-  }, [slug]);
+  }, [place]);
 
+  // ゲットするポケモンがセットされたら発火
   useEffect(() => {
     if (!pokemon) return;
 
@@ -65,6 +71,7 @@ export default function SearchPage() {
       status: 'get',
       id: pokemon.id
     }))
+
   }, [pokemon]);
 
   return (

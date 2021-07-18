@@ -1,5 +1,5 @@
 import { Type } from "../../types/pokemon/Type";
-import getTypeName from "./getTypeName";
+import TYPE_NAME from "../database/typeName";
 import { POKEMON_URL, TYPE_URL } from "./url";
 
 /**
@@ -7,7 +7,7 @@ import { POKEMON_URL, TYPE_URL } from "./url";
  * @param {string} id 
  * @returns {Type[]} ポケモンタイプ
  */
- const getPokemonType = async (id: string): Promise<Type[]> => {
+ const getPokemonTypes = async (id: string): Promise<Type[]> => {
   const ids = await fetch (POKEMON_URL + id)
     .then(res => res.json())
     .then(res => {
@@ -22,7 +22,7 @@ import { POKEMON_URL, TYPE_URL } from "./url";
 
   const types: Type[] = [];
   for (let i = 0; i < ids.length; i++) {
-    const name = await getTypeName(ids[i]);
+    const name = TYPE_NAME[ids[i]].ja;
     types.push({
       name,
       id: Number(ids[i])
@@ -30,4 +30,4 @@ import { POKEMON_URL, TYPE_URL } from "./url";
   }
   return types;
 }
-export default getPokemonType;
+export default getPokemonTypes;
