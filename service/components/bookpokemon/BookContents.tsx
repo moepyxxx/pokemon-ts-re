@@ -88,10 +88,6 @@ const BookContents: React.FC<Props> = ({ pokemons, pager, next, viewMore }) => {
 
       {queryComponent()}
 
-      <Pager>
-        { next ? <Button onClick={viewMore}>もっと見る</Button> : ''}
-      </Pager>
-
     </Section>
   );
 }
