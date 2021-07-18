@@ -1,2 +1,2 @@
-const MAX_POKEMON = 1118;
+const MAX_POKEMON = 898;
 export default MAX_POKEMON;
