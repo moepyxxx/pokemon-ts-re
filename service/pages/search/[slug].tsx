@@ -26,7 +26,7 @@ export default function SearchPage() {
       <Header />
       <PageTitle title='ポケモンを探す' menu='book' />
 
-      {duringSearch ? <DuringSearch place={place} /> : <DetectPokemon />}
+      {duringSearch && place ? <DuringSearch place={place} /> : <DetectPokemon />}
 
       <Footer />
     </>
