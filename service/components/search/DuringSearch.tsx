@@ -6,17 +6,17 @@ type Props = {
   place: SearchPlace;
 }
 
-const Panel: React.FC<Props> = ({ place }) => {
+const DuringSearch: React.FC<Props> = ({ place }) => {
   return (
-    <DuringSearch>
+    <Search>
       <Icon>{place.icon}</Icon>
       <MainText>{place.text}ではどんなポケモンに出会えるかな？</MainText>
       <SubText>（ポケモンを探し中…そのまま待ってね）</SubText>
-    </DuringSearch>
+    </Search>
   );
 }
 
-export const DuringSearch = styled.div`
+export const Search = styled.div`
   text-align: center;
   margin-bottom: 120px;
 `;
@@ -43,4 +43,4 @@ export const SubText = styled.p`
   animation: ${fade} infinite 1s alternate;
 `;
 
-export default Panel;
+export default DuringSearch;
