@@ -10,7 +10,7 @@ export type TMyBook = {
 };
 
 export const initialState: TMyBook = {
-  get: [],
+  get: [1, 4, 7],
   encounter: []
 };
 
