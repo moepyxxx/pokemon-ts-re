@@ -22,7 +22,8 @@ import { POKEMON_URL, TYPE_URL } from "./url";
 
   const types: Type[] = [];
   for (let i = 0; i < ids.length; i++) {
-    const name = TYPE_NAME[ids[i]].ja;
+    const typeIndex = ids[i] - 1;
+    const name = TYPE_NAME[typeIndex].ja;
     types.push({
       name,
       id: Number(ids[i])
