@@ -1,7 +1,7 @@
 import { SummaryBookPokemon } from "../../types/pokemon/SummaryBookPokemon";
 import getPokemonImage from "./getPokemonImage";
 import getPokemonName from "./getPokemonName";
-import getPokemonType from "./getPokemonType";
+import getPokemonTypes from "./getPokemonTypes";
 
 /**
  * 日本語のポケモン名を取得
@@ -12,7 +12,7 @@ const formatSummaryBookPokemon = async (id: string): Promise<SummaryBookPokemon>
 
   const name = await getPokemonName(id);
   const image = await getPokemonImage(id);
-  const types = await getPokemonType(id);
+  const types = await getPokemonTypes(id);
 
   return Object.assign({
     id,
