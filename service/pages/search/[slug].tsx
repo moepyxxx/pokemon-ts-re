@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { RootState } from '../../store';
 import { updateMyBook } from '../../store/myBookSlice';
 
 import Header from '../../components/common/Header';
@@ -13,7 +14,6 @@ import DetectPokemon from '../../components/search/DetectPokemon';
 import { SearchPlace } from '../../types/search/SearchPlace';
 import PLACES from '../../lib/database/places';
 import searchPokemon from '../../lib/pokemon/searchPokemon';
-
 
 type Pokemon = {
   name: string;
@@ -27,6 +27,8 @@ export default function SearchPage() {
   const [pokemon, setPokemon] = useState<Pokemon>(null);
 
   const dispatch = useDispatch();
+  const myBookIds = useSelector((state: RootState) => state.pokemon);
+
   const router = useRouter();
   const { slug } = router.query;
 
@@ -54,6 +56,10 @@ export default function SearchPage() {
 
   useEffect(() => {
     if (!pokemon) return;
+
+    // 重複チェック。すでにゲットしたポケモンは状態管理に追加しない
+    const isDuplicated = myBookIds.get.find(id => id === pokemon.id);
+    if (isDuplicated) return;
 
     dispatch(updateMyBook({
       status: 'get',
