@@ -26,6 +26,9 @@ export default function News({ news, isNext }: InferGetStaticPropsType<typeof ge
 
 export const getStaticProps: GetStaticProps = async () => {
 
+  // Nestjs API fetch 使い方
+  const hoge = await (await fetch('http://localhost:3001/book-pokemons')).json();
+
   const { news, isNext } = await getSummaryNewsList();
   return {
     props: {
