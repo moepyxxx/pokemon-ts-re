@@ -52,6 +52,7 @@ Contentfulから抜き出すデータ。
 
 ### SearchPlace
 
+- id: number
 - slug: string
 - icon: string
 - text: string
