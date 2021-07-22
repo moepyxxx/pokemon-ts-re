@@ -5,6 +5,7 @@
 - この型定義で定義されたファイルは、すべてtypesディレクトリ直下にまとめる。
 
 ## Pokemon
+ポケモン図鑑一覧に載せるデータ。
 決めながらやって、随時決まったらちょっと更新する。
 
 ### SummaryBookPokemon
@@ -23,6 +24,11 @@
 - height
 - weight
 - species: string
+
+## Type
+
+- id: number
+- name: string;
 
 ## News
 Contentfulから抜き出すデータ。
