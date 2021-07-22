@@ -1,0 +1,4 @@
+{
+  // tsconfigが第一階層にないとエラーが起きたため追記
+  "eslint.workingDirectories": [ "./backend", "./frontend" ]
+}
