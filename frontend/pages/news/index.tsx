@@ -7,9 +7,11 @@ import PageTitle from '../../components/common/PageTitle';
 import Footer from '../../components/common/Footer';
 import getSummaryNewsList from '../../lib/news/getSummaryNewsList';
 
-export default function News({ news, isNext, hoge }: InferGetStaticPropsType<typeof getStaticProps>) {
 
-  console.log(hoge);
+// コメントアウトは Nestjs API fetch 使い方 をしめしている
+export default function News({ news, isNext, /** hoge**/ }: InferGetStaticPropsType<typeof getStaticProps>) {
+
+  // console.log(hoge);
 
   const [pager,] = useState<number>(1);
   const [next,] = useState<boolean>(isNext);
@@ -28,13 +30,12 @@ export default function News({ news, isNext, hoge }: InferGetStaticPropsType<typ
 
 export const getStaticProps: GetStaticProps = async () => {
 
-  // Nestjs API fetch 使い方
-  const hoge = await (await fetch('http://localhost:3001/searchplaces/mizube')).json();
+  // const hoge = await (await fetch('http://localhost:3001/searchplaces/mizube')).json();
 
   const { news, isNext } = await getSummaryNewsList();
   return {
     props: {
-      hoge,
+      // hoge,
       news,
       isNext
     },
