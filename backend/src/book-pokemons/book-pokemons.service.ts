@@ -68,6 +68,7 @@ export class BookPokemonsService {
     ;    
   }
 
+  // モック
   findDetailOne(id: number): IBookPokemon {
     return {
       id,
