@@ -21,8 +21,10 @@ export class BookPokemonsController {
     const offset = params.offset ?? 0;
 
     const observableLists: Observable<any>[] = [];
-    const ids = [...Array(limit).keys()].map(i => i + 1 + offset);
+
+    observableLists.push(this.BookPokemonsService.checkIsNext(params));
     
+    const ids = [...Array(limit).keys()].map(i => i + 1 + offset);
     for (let i = 0; i < ids.length; i++) {
       observableLists.push(this.BookPokemonsService.getPokemonTypesIds(ids[i]))
       observableLists.push(this.BookPokemonsService.getPokemonName(ids[i]))
@@ -31,16 +33,11 @@ export class BookPokemonsController {
 
     forkJoin(observableLists).subscribe(() => {
       res.status(HttpStatus.OK)
-        .json(this.BookPokemonsService.hoge);
+        .json({
+          bookPokemons: this.BookPokemonsService.hoge,
+          isNext: this.BookPokemonsService.isNext
+        });
     });
-  }
-
-  @Get('/check')
-  checkIsNext(@Param() params: IFindSummaryAllParams, @Res() res: Response) {
-    this.BookPokemonsService.checkIsNext(params).subscribe(() => {
-        res.status(HttpStatus.OK)
-          .json(this.BookPokemonsService.isNext);
-    })
   }
 
   @Get(':id')
