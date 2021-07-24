@@ -36,7 +36,7 @@ export class BookPokemonsService {
     ;
   }
 
-  getPokemonTypesIds(id: number) : Observable<any> {
+  getTypes(id: number) : Observable<any> {
     return this.httpService.get(DEFAULT_POKEMON_URL + id)
       .pipe(map(res => {
         const names: IType[] = [];
@@ -50,7 +50,7 @@ export class BookPokemonsService {
     ;
   }
 
-  getPokemonName(id: number): Observable<any> {
+  getName(id: number): Observable<any> {
     return this.httpService.get(POKEMON_SPECIES_URL + id)
       .pipe(map(res => {
         const ja = res.data.names.find( _ => _.language.name === 'ja-Hrkt' );
@@ -59,7 +59,7 @@ export class BookPokemonsService {
     ;
   }
 
-  getPokemonImage(id: number): Observable<any> {
+  getImage(id: number): Observable<any> {
     return this.httpService.get(DEFAULT_POKEMON_URL + id)
       .pipe(map(res => {
         const image = res.data.sprites.front_default;

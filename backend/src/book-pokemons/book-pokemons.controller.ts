@@ -2,7 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { Controller, Get, HttpStatus, Param, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { forkJoin, Observable } from 'rxjs';
-import { BookPokemonsService } from './book-pokemons.service';
+import { BookPokemonsService as Service } from './book-pokemons.service';
 
 export interface IFindSummaryAllParams {
   limit: number;
@@ -12,7 +12,7 @@ export interface IFindSummaryAllParams {
 @Controller('book-pokemons')
 export class BookPokemonsController {
 
-  constructor(private BookPokemonsService: BookPokemonsService, private httpService: HttpService) {}
+  constructor(private Service: Service) {}
 
   @Get()
   findSummaryAll(@Param() params: IFindSummaryAllParams, @Res() res: Response) {
@@ -25,22 +25,22 @@ export class BookPokemonsController {
     const observableLists: Observable<any>[] = [];
 
     // isNextを取得
-    observableLists.push(this.BookPokemonsService.checkIsNext(params));
+    observableLists.push(this.Service.checkIsNext(params));
 
     // bookPokemonsを取得
     const ids = [...Array(limit).keys()].map(i => i + 1 + offset);
     for (let i = 0; i < ids.length; i++) {
-      observableLists.push(this.BookPokemonsService.getPokemonTypesIds(ids[i]))
-      observableLists.push(this.BookPokemonsService.getPokemonName(ids[i]))
-      observableLists.push(this.BookPokemonsService.getPokemonImage(ids[i]))
+      observableLists.push(this.Service.getTypes(ids[i]))
+      observableLists.push(this.Service.getName(ids[i]))
+      observableLists.push(this.Service.getImage(ids[i]))
     }
 
     // すべての処理が完了したら返すようにforkJoinを使う
     forkJoin(observableLists).subscribe(() => {
       res.status(HttpStatus.OK)
         .json({
-          bookPokemons: this.BookPokemonsService.bookPokemons,
-          isNext: this.BookPokemonsService.isNext
+          bookPokemons: this.Service.bookPokemons,
+          isNext: this.Service.isNext
         });
     });
   }
@@ -48,6 +48,6 @@ export class BookPokemonsController {
   @Get(':id')
   findDetailOne(@Param('id') id: number, @Res() res: Response) {
     res.status(HttpStatus.OK)
-      .json(this.BookPokemonsService.findDetailOne(id));
+      .json(this.Service.findDetailOne(id));
   }
 }
