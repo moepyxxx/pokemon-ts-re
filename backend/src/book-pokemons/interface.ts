@@ -1,5 +1,3 @@
-import { IType } from 'src/type/interface';
-
 export interface IBookPokemon {
   id: number;
   name: string;
@@ -21,4 +19,9 @@ export interface ISummaryBookPokemon {
 interface IAbilities {
   name: string;
   description: string;
+}
+
+export interface IType {
+  id: number;
+  name: string;
 }

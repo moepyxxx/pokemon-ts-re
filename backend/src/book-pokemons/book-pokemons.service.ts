@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { IBookPokemon, ISummaryBookPokemon } from './interface';
-import { IType } from 'src/type/interface';
+import { IType } from './interface';
 import { IFindSummaryAllParams } from './book-pokemons.controller';
 
 import { DEFAULT_POKEMON_URL, POKEMON_SPECIES_URL, TYPE_URL } from './sources/url';
