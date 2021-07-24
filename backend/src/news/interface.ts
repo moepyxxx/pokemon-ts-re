@@ -1,7 +1,10 @@
 export interface ISummaryNews {
   id: number;
   title: string;
-  pokemon: string;
+  pokemon: {
+    image: string;
+    title: string;
+  };
   published: Date;
 }
 
