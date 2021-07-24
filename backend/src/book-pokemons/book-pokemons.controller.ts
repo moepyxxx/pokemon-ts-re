@@ -23,7 +23,7 @@ export class BookPokemonsController {
     const observableLists: Observable<any>[] = [];
 
     observableLists.push(this.BookPokemonsService.checkIsNext(params));
-    
+
     const ids = [...Array(limit).keys()].map(i => i + 1 + offset);
     for (let i = 0; i < ids.length; i++) {
       observableLists.push(this.BookPokemonsService.getPokemonTypesIds(ids[i]))
@@ -34,7 +34,7 @@ export class BookPokemonsController {
     forkJoin(observableLists).subscribe(() => {
       res.status(HttpStatus.OK)
         .json({
-          bookPokemons: this.BookPokemonsService.hoge,
+          bookPokemons: this.BookPokemonsService.bookPokemons,
           isNext: this.BookPokemonsService.isNext
         });
     });

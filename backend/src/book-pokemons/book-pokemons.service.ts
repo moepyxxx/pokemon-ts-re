@@ -14,11 +14,11 @@ import TYPE_NAME from './sources/typeName';
 export class BookPokemonsService {
 
   public isNext: boolean;
-  public hoge: ISummaryBookPokemon[] = [];
+  public bookPokemons: ISummaryBookPokemon[] = [];
   
   constructor(private httpService: HttpService) {
     for (let i = 0; i < 20 ;i++) {
-      this.hoge.push({})
+      this.bookPokemons.push({})
     }
   }
 
@@ -45,7 +45,7 @@ export class BookPokemonsService {
           const name = TYPE_NAME[Number(id) - 1].ja;
           names.push({ id, name });
         }
-        this.hoge[id - 1].types = names;
+        this.bookPokemons[id - 1].types = names;
       }))
     ;
   }
@@ -54,7 +54,7 @@ export class BookPokemonsService {
     return this.httpService.get(POKEMON_SPECIES_URL + id)
       .pipe(map(res => {
         const ja = res.data.names.find( _ => _.language.name === 'ja-Hrkt' );
-        this.hoge[id - 1].name = ja.name;
+        this.bookPokemons[id - 1].name = ja.name;
       }))
     ;
   }
@@ -63,7 +63,7 @@ export class BookPokemonsService {
     return this.httpService.get(DEFAULT_POKEMON_URL + id)
       .pipe(map(res => {
         const image = res.data.sprites.front_default;
-        this.hoge[id - 1].image = image;
+        this.bookPokemons[id - 1].image = image;
       }))
     ;    
   }
