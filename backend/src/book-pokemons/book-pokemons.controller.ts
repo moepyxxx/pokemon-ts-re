@@ -1,16 +1,46 @@
+import { HttpService } from '@nestjs/axios';
 import { Controller, Get, HttpStatus, Param, Res } from '@nestjs/common';
 import { Response } from 'express';
+import { forkJoin, Observable } from 'rxjs';
 import { BookPokemonsService } from './book-pokemons.service';
+
+export interface IFindSummaryAllParams {
+  limit: number;
+  offset: number;
+}
 
 @Controller('book-pokemons')
 export class BookPokemonsController {
 
-  constructor(private BookPokemonsService: BookPokemonsService) {}
+  constructor(private BookPokemonsService: BookPokemonsService, private httpService: HttpService) {}
 
   @Get()
-  findSummaryAll(@Res() res: Response) {
-    res.status(HttpStatus.OK)
-      .json(this.BookPokemonsService.findSummaryAll());
+  findSummaryAll(@Param() params: IFindSummaryAllParams, @Res() res: Response) {
+
+    const limit = params.limit ?? 20;
+    const offset = params.offset ?? 0;
+
+    const observableLists: Observable<any>[] = [];
+    const ids = [...Array(limit).keys()].map(i => i + 1 + offset);
+    
+    for (let i = 0; i < ids.length; i++) {
+      observableLists.push(this.BookPokemonsService.getPokemonTypesIds(ids[i]))
+      observableLists.push(this.BookPokemonsService.getPokemonName(ids[i]))
+      observableLists.push(this.BookPokemonsService.getPokemonImage(ids[i]))
+    }
+
+    forkJoin(observableLists).subscribe(() => {
+      res.status(HttpStatus.OK)
+        .json(this.BookPokemonsService.hoge);
+    });
+  }
+
+  @Get('/check')
+  checkIsNext(@Param() params: IFindSummaryAllParams, @Res() res: Response) {
+    this.BookPokemonsService.checkIsNext(params).subscribe(() => {
+        res.status(HttpStatus.OK)
+          .json(this.BookPokemonsService.isNext);
+    })
   }
 
   @Get(':id')
