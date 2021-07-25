@@ -55,6 +55,7 @@ export class BookPokemonsService {
       .pipe(map(res => {
         const ja = res.data.names.find( _ => _.language.name === 'ja-Hrkt' );
         this.bookPokemons[id - 1].name = ja.name;
+        this.bookPokemons[id - 1].id = id;
       }))
     ;
   }
