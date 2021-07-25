@@ -1,10 +1,10 @@
 
 import Link from 'next/link';
 import styled from 'styled-components';
-import { SearchPlace } from '../../types/search/SearchPlace';
+import { ISearchPlace } from '../../interface/searchplace.interface';
 
 type Props = {
-  place: SearchPlace;
+  place: ISearchPlace;
 }
 
 const Panel: React.FC<Props> = ({ place }) => {

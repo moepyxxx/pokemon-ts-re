@@ -1,9 +1,9 @@
 
 import styled, { keyframes } from 'styled-components';
-import { SearchPlace } from '../../types/search/SearchPlace';
+import { ISearchPlace } from '../../interface/searchplace.interface';
 
 type Props = {
-  place: SearchPlace;
+  place: ISearchPlace;
 }
 
 const DuringSearch: React.FC<Props> = ({ place }) => {

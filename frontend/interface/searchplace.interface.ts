@@ -1,4 +1,4 @@
-export type SearchPlace = {
+export type ISearchPlace = {
   slug: string;
   icon: string;
   text: string;

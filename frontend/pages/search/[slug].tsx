@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
 
 import { RootState } from '../../store';
 import { updateMyBook } from '../../store/myBookSlice';
@@ -11,8 +11,8 @@ import Footer from '../../components/common/Footer';
 import DuringSearch from '../../components/search/DuringSearch';
 import DetectPokemon from '../../components/search/DetectPokemon';
 
-import { SearchPlace } from '../../types/search/SearchPlace';
-import PLACES from '../../lib/database/places';
+import API_URL from '../../config/api';
+import { ISearchPlace } from '../../interface/searchplace.interface';
 import searchPokemon from '../../lib/pokemon/searchPokemon';
 
 type Pokemon = {
@@ -21,28 +21,14 @@ type Pokemon = {
   id: number;
 }
 
-export default function SearchPage() {
+export default function SearchPage({ place }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [duringSearch, setDuringSearch] = useState<boolean>(true);
-  const [place, setPlace] = useState<SearchPlace>(null);
   const [pokemon, setPokemon] = useState<Pokemon>(null);
 
   const dispatch = useDispatch();
   const myBookIds = useSelector((state: RootState) => state.pokemon);
 
-  const router = useRouter();
-  const { slug } = router.query;
-
   useEffect(() => {
-
-    // 複数実行されることを防ぐ
-    if (!slug) return;
-    setPlace(PLACES.find(place => place.slug === slug));
-
-  }, [slug]);
-
-  // 場所情報がセットされたら発火
-  useEffect(() => {
-    if (!place) return;
 
     searchPokemon(place.pokemonTypeIds)
       .then(res => {
@@ -57,7 +43,7 @@ export default function SearchPage() {
       setDuringSearch(false);
     }, 3000);
 
-  }, [place]);
+  }, []);
 
   // ゲットするポケモンがセットされたら発火
   useEffect(() => {
@@ -84,4 +70,30 @@ export default function SearchPage() {
       <Footer />
     </>
   )  
+}
+
+export async function getStaticPaths() {
+  
+  const places: ISearchPlace[] = await( await fetch(`${API_URL}searchplaces/`)).json();
+
+  const paths = [];
+  for (let i = 0; i < places.length; i++) {
+    const path = { params: { slug: places[i].slug } };
+    paths.push(path);
+  }
+
+  return {
+    paths,
+    fallback: true
+  };
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  
+  const place: ISearchPlace = await( await fetch(`${API_URL}searchplaces/${params.slug}`)).json();
+
+  return {
+    props: { place },
+    revalidate: 60
+  };
 }

@@ -1,15 +1,18 @@
 
 import styled from 'styled-components';
-import PLACES from '../../lib/database/places';
 import Panel from './Panel';
+import { ISearchPlace } from '../../interface/searchplace.interface';
 
-const Contents: React.FC = () => {
+type Props = {
+  places: ISearchPlace[];
+}
+const Contents: React.FC<Props> = ({ places }) => {
 
   return (
     <SearchPlace>
       <Description>どこにいって探してみる？</Description>
       <List>
-        {PLACES.map(place => {
+        {places.map(place => {
           return (<Panel key={place.slug} place={place} />)
         })}
       </List>
