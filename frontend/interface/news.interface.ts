@@ -1,4 +1,4 @@
-export type SummaryNews = {
+export type ISummaryNews = {
   id: string;
   title: string;
   pokemon: {

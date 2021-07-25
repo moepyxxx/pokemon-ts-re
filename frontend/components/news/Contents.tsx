@@ -1,11 +1,11 @@
 
 import Link from 'next/link';
 import styled from 'styled-components';
-import { SummaryNews } from '../../types/news/SummaryNews';
+import { ISummaryNews } from '../../interface/news.interface';
 import Panel from './Panel';
 
 type Props = {
-  news: SummaryNews[];
+  news: ISummaryNews[];
   pager: number;
   prev: boolean;
   next: boolean;

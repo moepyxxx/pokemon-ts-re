@@ -5,14 +5,12 @@ import Header from '../../components/common/Header';
 import NewsContents from '../../components/news/Contents';
 import PageTitle from '../../components/common/PageTitle';
 import Footer from '../../components/common/Footer';
-import getSummaryNewsList from '../../lib/news/getSummaryNewsList';
+import API_URL from '../../config/api';
 
 
 // コメントアウトは Nestjs API fetch 使い方 をしめしている
-export default function News({ news, isNext, /** hoge **/ }: InferGetStaticPropsType<typeof getStaticProps>) {
-
-  // console.log(hoge);
-
+export default function News({ news, isNext }: InferGetStaticPropsType<typeof getStaticProps>) {
+    
   const [pager,] = useState<number>(1);
   const [next,] = useState<boolean>(isNext);
   const [prev,] = useState<boolean>(false);
@@ -30,12 +28,9 @@ export default function News({ news, isNext, /** hoge **/ }: InferGetStaticProps
 
 export const getStaticProps: GetStaticProps = async () => {
 
-  // const hoge = await (await fetch('http://localhost:3001/book-pokemons/')).json();
-
-  const { news, isNext } = await getSummaryNewsList();
+  const { news, isNext } = await (await fetch(API_URL + 'news/')).json();
   return {
     props: {
-      // hoge,
       news,
       isNext
     },
