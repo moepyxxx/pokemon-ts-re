@@ -9,7 +9,7 @@ import getSummaryNewsList from '../../lib/news/getSummaryNewsList';
 
 
 // コメントアウトは Nestjs API fetch 使い方 をしめしている
-export default function News({ news, isNext, /** hoge**/ }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function News({ news, isNext, /** hoge **/ }: InferGetStaticPropsType<typeof getStaticProps>) {
 
   // console.log(hoge);
 
@@ -30,7 +30,7 @@ export default function News({ news, isNext, /** hoge**/ }: InferGetStaticPropsT
 
 export const getStaticProps: GetStaticProps = async () => {
 
-  // const hoge = await (await fetch('http://localhost:3001/searchplaces/mizube')).json();
+  // const hoge = await (await fetch('http://localhost:3001/book-pokemons/')).json();
 
   const { news, isNext } = await getSummaryNewsList();
   return {
